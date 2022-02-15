@@ -26,13 +26,13 @@ runs:
         echo "::set-output name=module::$(go env GOMODCACHE)"
 
     - name: "Setup private Go module key."
-      if: ${{ inputs.private-key != "" }}
+      if: ${{ inputs.private-key != '' }}
       uses: webfactory/ssh-agent@v0.5.4
       with:
         ssh-private-key: ${{ inputs.private-key }}
 
     - name: "Setup private Go module access."
-      if: ${{ inputs.private-key != "" }}
+      if: ${{ inputs.private-key != '' }}
       shell: bash
       run: git config --global url."ssh://git@github.com".insteadOf "https://github.com"
 
