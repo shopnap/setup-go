@@ -36,8 +36,7 @@ jobs:
           go-version: ${{ matrix.go }}
           private-key: ${{ env.SSH_PRIVATE_KEY }}
         env:
-          SSH_PRIVATE_KEY: |
-            SOMETHING_SECRET
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_DEMO_PRIVATE_KEY }}
 
       - name: "Verify Go installation"
         run: go version | grep -q ${{ matrix.go }}
