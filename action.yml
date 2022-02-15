@@ -1,0 +1,33 @@
+name: Golang Module Cache
+author: Shopnap
+description: Setup requested Golang version with module and build caching enabled.
+
+inputs:
+  go-version:
+    description: The desired Go version to use.
+    required: true
+
+runs:
+  using: composite
+  steps:
+    - name: Setup Golang
+      uses: actions/setup-go@v2
+      with:
+        go-version: ${{ inputs.go-version }}
+
+    - name: Determine OS Golang paths
+      id: golang-path
+      shell: bash
+      run: |
+        echo "::set-output name=build::$(go env GOCACHE)"
+        echo "::set-output name=module::$(go env GOMODCACHE)"
+
+    - name: Setup Golang caches
+      uses: actions/cache@v2
+      with:
+        path: |
+          ${{ steps.golang-path.outputs.build }}
+          ${{ steps.golang-path.outputs.module }}
+        key: ${{ runner.os }}-golang-${{ hashFiles('**/go.sum') }}
+        restore_keys:
+          - ${{ runner.os }}-golang-
