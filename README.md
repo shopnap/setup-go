@@ -26,7 +26,7 @@ to:
 ```yml
 steps:
   - name: Setup Golang with cache
-    uses: shopnap/gomod-cache@main
+    uses: shopnap/setup-go@main
     with:
       go-version: 1.17
 ```

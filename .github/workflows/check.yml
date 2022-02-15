@@ -17,7 +17,7 @@ jobs:
         go: ["1.17", "1.16", "1.15"]
     steps:
       - name: "Setup Go"
-        uses: shopnap/gomod-cache@main
+        uses: shopnap/setup-go@main
         with:
           go-version: ${{ matrix.go }}
       - name: "Verify Go installation"
@@ -31,7 +31,7 @@ jobs:
         go: ["1.17", "1.16", "1.15"]
     steps:
       - name: "Setup Go"
-        uses: shopnap/gomod-cache@main
+        uses: shopnap/setup-go@main
         with:
           go-version: ${{ matrix.go }}
           private-key: ${{ env.SSH_PRIVATE_KEY }}
