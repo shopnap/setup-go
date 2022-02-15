@@ -10,12 +10,15 @@ on:
 
 jobs:
   go-installation:
-    name: Go installation
+    name: Go ${{ matrix.go }} installation
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        go: ["1.17", "1.16", "1.15"]
     steps:
       - name: "Setup Go"
         uses: shopnap/gomod-cache@main
         with:
-          go-version: 1.17
+          go-version: ${{ matrix.go }}
       - name: "Verify Go installation"
-        run: go version
+        run: go version | grep -q ${{ matrix.go }}
