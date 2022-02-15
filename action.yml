@@ -6,6 +6,9 @@ inputs:
   go-version:
     description: The desired Go version to use.
     required: true
+  private-key:
+    description: The private key to use to access the private module's Github repositories.
+    required: false
 
 runs:
   using: composite
@@ -21,6 +24,17 @@ runs:
       run: |
         echo "::set-output name=build::$(go env GOCACHE)"
         echo "::set-output name=module::$(go env GOMODCACHE)"
+
+    - name: "Setup private Go module key."
+      if: ${{ inputs.private-key != "" }}
+      uses: webfactory/ssh-agent@v0.5.4
+      with:
+        ssh-private-key: ${{ inputs.private-key }}
+
+    - name: "Setup private Go module access."
+      if: ${{ inputs.private-key != "" }}
+      shell: bash
+      run: git config --global url."ssh://git@github.com".insteadOf "https://github.com"
 
     - name: Setup Golang caches
       uses: actions/cache@v2
