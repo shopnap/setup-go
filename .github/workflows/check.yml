@@ -1,0 +1,21 @@
+name: "Check"
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  go-installation:
+    name: Go installation
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Setup Go"
+        uses: shopnap/gomod-cache@main
+        with:
+          go-version: 1.17
+      - name: "Verify Go installation"
+        run: go version
