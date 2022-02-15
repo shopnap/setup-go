@@ -29,5 +29,6 @@ runs:
           ${{ steps.golang-path.outputs.build }}
           ${{ steps.golang-path.outputs.module }}
         key: ${{ runner.os }}-golang-${{ hashFiles('**/go.sum') }}
-        restore_keys:
-          - ${{ runner.os }}-golang-
+        restore_keys: |
+          ${{ runner.os }}-golang-${{ hashFiles('**/go.sum') }}
+          ${{ runner.os }}-golang-
